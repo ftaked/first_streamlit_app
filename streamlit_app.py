@@ -44,22 +44,15 @@ except URLError as e:
   streamlit.error(e)
 
 
+def insert_into_fruit(new_fruit):
+  with my_cnx.cursor() as my_cur:
+    my_cur.execute("insert into fruit_load_list values ('" + new_fruit + "')")
+    return "adding " + new_fruit
+  
 def get_fruit_load_list():
   with my_cnx.cursor() as my_cur:
     my_cur.execute("select * from pc_rivery_db.public.fruit_load_list")
     return my_cur.fetchall()
-
-streamlit.header("The fruts load list contains:")
-if streamlit.button('Get fruit load list'):
-  my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
-  my_data_row = get_fruit_load_list()
-  streamlit.dataframe(my_data_row)
-
-
-def insert_into_fruit(new_fruit):
-  with my_cnx.cursor() as my_cur:
-    my_cur.execute("insert into fruit_load_list values ('test')")
-    return "adding " + new_fruit
 
 add_my_fruit = streamlit.text_input("Add a fruit to list")
 if streamlit.button('Add a fruit to list'):
@@ -67,6 +60,14 @@ if streamlit.button('Add a fruit to list'):
   added_fruit = insert_into_fruit(add_my_fruit)
   streamlit.text(added_fruit)
   
+streamlit.header("The fruts load list contains:")
+if streamlit.button('Get fruit load list'):
+  my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
+  my_data_row = get_fruit_load_list()
+  my_cnx.close()
+  streamlit.dataframe(my_data_row)
+
+
 # my_cur.execute("insert into pc_rivery_db.public.fruit_load_list values ()")
   
 # # これより下のセクションには実行させない
