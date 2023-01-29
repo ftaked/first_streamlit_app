@@ -24,6 +24,10 @@ streamlit.dataframe(fruit_to_show)
 
 streamlit.header("Fruityvice Fruit Advice!")
 
+def get_fruityvice_data(fruit_choice):
+  fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choice)
+  fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
+  return fruityvice_normalized
 
 try:
   fruit_choice = streamlit.text_input('What fruit would you like information about?','Kiwi')
@@ -51,11 +55,4 @@ streamlit.dataframe(my_data_row)
 
 add_my_fruit = streamlit.text_input("Input your favorite fruit")
 my_cur.execute("insert into pc_rivery_db.public.fruit_load_list values ()")
-
-
-
-def get_fruityvice_data(fruit_choice):
-  fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choice)
-  fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
-  return fruityvice_normalized
   
