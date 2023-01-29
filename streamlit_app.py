@@ -38,7 +38,7 @@ try:
 
 
 # これより下のセクションには実行させない
-streamlt.stop()
+streamlit.stop()
 
 # snowflake connect
 my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
