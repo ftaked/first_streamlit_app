@@ -43,12 +43,6 @@ try:
 except URLError as e:
   streamlit.error(e)
 
-  
-  
-# これより下のセクションには実行させない
-streamlit.stop()
-
-
 
 def get_fruit_load_list():
   with my_cnx.cursor() as my_cur:
@@ -63,6 +57,9 @@ if streamlit.button('Get fruit load list'):
 
 
 
+
 add_my_fruit = streamlit.text_input("Input your favorite fruit")
 # my_cur.execute("insert into pc_rivery_db.public.fruit_load_list values ()")
   
+# # これより下のセクションには実行させない
+# streamlit.stop()
